@@ -59,6 +59,7 @@ Before you begin, ensure you have the following installed:
    # Holiday API Configuration
 
    HOLIDAY_API_KEY=sdik5jj85QG72aYX88Cbq3ifRALVZebw( only 500 free calls :)
+   GET YOUR OWN APIKEY FROM https://calendarific.com/account/dashboard AND REPLACE IN .ENV IF CURRENT ONE EXPIRES
 
 
 4. Run the backend server:
