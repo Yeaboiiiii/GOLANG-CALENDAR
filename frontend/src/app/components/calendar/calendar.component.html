@@ -1,0 +1,128 @@
+<div class="calendar-container">
+  <div class="calendar-header">
+    <mat-form-field>
+      <mat-label>Country</mat-label>
+      <mat-select [(ngModel)]="selectedCountry" (selectionChange)="onCountryChange()">
+        <mat-option *ngFor="let country of countries" [value]="country.code">
+          {{country.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-button-toggle-group [(ngModel)]="selectedView" (change)="onViewChange()">
+      <mat-button-toggle value="monthly">Monthly</mat-button-toggle>
+      <mat-button-toggle value="quarterly">Quarterly</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <div class="calendar-navigation" *ngIf="selectedView === 'monthly'">
+    <button mat-icon-button (click)="previousMonth()">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <div class="date-selector">
+      <span class="month">{{monthNames[currentMonth - 1]}}</span>
+      <mat-form-field appearance="fill">
+        <mat-select [(ngModel)]="currentYear" (selectionChange)="onYearChange()">
+          <mat-option *ngFor="let year of availableYears" [value]="year">
+            {{year}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <button mat-icon-button (click)="nextMonth()">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+
+  <div class="calendar-grid" *ngIf="selectedView === 'monthly'">
+    <div class="weekdays">
+      <div class="weekday">Mon</div>
+      <div class="weekday">Tue</div>
+      <div class="weekday">Wed</div>
+      <div class="weekday">Thu</div>
+      <div class="weekday">Fri</div>
+      <div class="weekday">Sat</div>
+      <div class="weekday">Sun</div>
+    </div>
+
+    <div class="weeks">
+      <div class="week" *ngFor="let week of weeks">
+        <div class="day" *ngFor="let day of week" [ngClass]="{
+          'weekend': day?.isWeekend,
+          'light-green': day?.highlight === 'light-green',
+          'dark-green': day?.highlight === 'dark-green',
+          'empty': !day
+        }">
+          <div class="day-number" *ngIf="day">{{day.day}}</div>
+          <div class="holiday-list" *ngIf="day?.holidays?.length">
+            <div class="holiday" *ngFor="let holiday of day.holidays">
+              {{holiday.name}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quarterly-view" *ngIf="selectedView === 'quarterly'">
+    <div class="calendar-navigation">
+      <button mat-icon-button (click)="previousQuarter()">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <div class="date-selector">
+        <span class="quarter">Q{{currentQuarter}} </span>
+        <mat-form-field appearance="fill" class="month-select">
+          <mat-select [(ngModel)]="currentMonth" (selectionChange)="setMonth($event.value)">
+            <mat-option *ngFor="let month of monthNames; let i = index" [value]="i + 1">
+              {{month}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-select [(ngModel)]="currentYear" (selectionChange)="onYearChange()">
+            <mat-option *ngFor="let year of availableYears" [value]="year">
+              {{year}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <button mat-icon-button (click)="nextQuarter()">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+
+    <div class="quarterly-months">
+      <div class="month-container" *ngFor="let monthData of quarterlyMonths">
+        <h3 class="month-title">{{monthNames[monthData.month - 1]}} {{monthData.year}}</h3>
+        <div class="calendar-grid">
+          <div class="weekdays">
+            <div class="weekday">Mon</div>
+            <div class="weekday">Tue</div>
+            <div class="weekday">Wed</div>
+            <div class="weekday">Thu</div>
+            <div class="weekday">Fri</div>
+            <div class="weekday">Sat</div>
+            <div class="weekday">Sun</div>
+          </div>
+          <div class="weeks">
+            <div class="week" *ngFor="let week of monthData.weeks">
+              <div class="day" *ngFor="let day of week" [ngClass]="{
+                'weekend': day?.isWeekend,
+                'light-green': day?.highlight === 'light-green',
+                'dark-green': day?.highlight === 'dark-green',
+                'empty': !day
+              }">
+                <div class="day-number" *ngIf="day">{{day.day}}</div>
+                <div class="holiday-list" *ngIf="day?.holidays?.length">
+                  <div class="holiday" *ngFor="let holiday of day.holidays">
+                    {{holiday.name}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
