@@ -49,23 +49,16 @@ Before you begin, ensure you have the following installed:
 
 3. Create a `.env` file in the backend directory with the following content:
    ```env
-   # Server Configuration
-   PORT=8080
-   ENV=development
-
-   # CORS Configuration
-   ALLOWED_ORIGINS= allowed all origin for dev
-
    # Holiday API Configuration
 
-   HOLIDAY_API_KEY=sdik5jj85QG72aYX88Cbq3ifRALVZebw( only 500 free calls :)
+   HOLIDAY_API_KEY=iQEDx25XpR1SM8KNUZ5vwSiooKwI58AC
+   # GET YOUR OWN APIKEY FROM https://calendarific.com/account/dashboard AND REPLACE IN .ENV IF CURRENT ONE EXPIRES
 
 
 4. Run the backend server:
    ```bash
    go run main.go
    ```
-   The server will start on http://localhost:8080
 
 ### Frontend Setup
 
