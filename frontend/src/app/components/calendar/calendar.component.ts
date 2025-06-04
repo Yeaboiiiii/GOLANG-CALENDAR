@@ -29,7 +29,7 @@ import { FormsModule } from '@angular/forms';
 export class CalendarComponent implements OnInit {
   countries: Country[] = [];
   selectedCountry: string = 'IN';
-  selectedView: 'monthly' | 'quarterly' = 'monthly';
+  selectedView: 'monthly' | 'quarterly'|'holiday' = 'holiday';
   currentYear: number = new Date().getFullYear();
   currentMonth: number = new Date().getMonth() + 1;
   currentQuarter: number = Math.floor((new Date().getMonth() / 3)) + 1;
@@ -76,7 +76,8 @@ export class CalendarComponent implements OnInit {
   }
 
   loadHolidays() {
-    if (this.selectedView === 'monthly') {
+    console.log("fdf");
+    if (this.selectedView === 'monthly'|| this.selectedView==='holiday') {
       // Get holidays for current month
       this.holidayService.getHolidays(
         this.selectedCountry,

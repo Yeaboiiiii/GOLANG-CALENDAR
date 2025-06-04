@@ -12,10 +12,11 @@
     <mat-button-toggle-group [(ngModel)]="selectedView" (change)="onViewChange()">
       <mat-button-toggle value="monthly">Monthly</mat-button-toggle>
       <mat-button-toggle value="quarterly">Quarterly</mat-button-toggle>
+      <mat-button-toggle value="holiday">Holiday</mat-button-toggle>
     </mat-button-toggle-group>
   </div>
 
-  <div class="calendar-navigation" *ngIf="selectedView === 'monthly'">
+  <div class="calendar-navigation" *ngIf="selectedView === 'monthly'|| selectedView === 'holiday'">
     <button mat-icon-button (click)="previousMonth()">
       <mat-icon>chevron_left</mat-icon>
     </button>
@@ -33,6 +34,42 @@
       <mat-icon>chevron_right</mat-icon>
     </button>
   </div>
+
+    <div class="calendar-grid" *ngIf="selectedView === 'holiday'">
+    <div class="weekdays">
+      <div class="weekday">Mon</div>
+      <div class="weekday">Tue</div>
+      <div class="weekday">Wed</div>
+      <div class="weekday">Thu</div>
+      <div class="weekday">Fri</div>
+      <div class="weekday">Sat</div>
+      <div class="weekday">Sun</div>
+    </div>
+
+    <div class="weeks">
+      <div class="week" *ngFor="let week of weeks">
+        <div  *ngFor="let day of week">
+            <div *ngIf="day?.highlight=='light-green'||day?.highlight=='dark-green'"> 
+                <div class="day"  [ngClass]="{
+                      'weekend': day?.isWeekend,
+                      'light-green': day?.highlight === 'light-green',
+                      'dark-green': day?.highlight === 'dark-green',
+                      'empty': !day
+                    }">
+                        <div class="day-number" *ngIf="day">{{day.day}}</div>
+                                    <div class="holiday-list" *ngIf="day?.holidays?.length">
+                                      <div class="holiday" *ngFor="let holiday of day.holidays">
+                                        {{holiday.name}}
+                                      </div>
+                        </div>
+
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <div class="calendar-grid" *ngIf="selectedView === 'monthly'">
     <div class="weekdays">
@@ -53,12 +90,14 @@
           'dark-green': day?.highlight === 'dark-green',
           'empty': !day
         }">
-          <div class="day-number" *ngIf="day">{{day.day}}</div>
-          <div class="holiday-list" *ngIf="day?.holidays?.length">
-            <div class="holiday" *ngFor="let holiday of day.holidays">
-              {{holiday.name}}
-            </div>
-          </div>
+           
+                <div class="day-number" *ngIf="day">{{day.day}}</div>
+                <div class="holiday-list" *ngIf="day?.holidays?.length">
+                  <div class="holiday" *ngFor="let holiday of day.holidays">
+                    {{holiday.name}}
+                  </div>
+                </div>
+            
         </div>
       </div>
     </div>
